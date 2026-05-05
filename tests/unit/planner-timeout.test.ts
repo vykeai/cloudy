@@ -1,8 +1,13 @@
 import { describe, it, expect, vi } from 'vitest';
 
 // Mock dependencies before importing the module under test
+<<<<<<< Updated upstream
 // Default planning-runner mock — returns an empty success so verification passes gracefully
 const DEFAULT_RUN_RESULT = {
+=======
+// Default runClaude mock — returns an empty success so verification passes gracefully
+const DEFAULT_RUN_CLAUDE_RESULT = {
+>>>>>>> Stashed changes
   success: true,
   output: '{}',
   error: undefined,
@@ -11,10 +16,16 @@ const DEFAULT_RUN_RESULT = {
   costUsd: 0,
 };
 
+<<<<<<< Updated upstream
 vi.mock('../../src/executor/model-runner.js', () => {
   const runPhaseModel = vi.fn().mockResolvedValue(DEFAULT_RUN_RESULT);
   return { runPhaseModel, runAbstractModel: runPhaseModel, runClaude: runPhaseModel };
 });
+=======
+vi.mock('../../src/executor/claude-runner.js', () => ({
+  runClaude: vi.fn().mockResolvedValue(DEFAULT_RUN_CLAUDE_RESULT),
+}));
+>>>>>>> Stashed changes
 
 vi.mock('../../src/utils/logger.js', () => ({
   log: { info: vi.fn(), warn: vi.fn(), error: vi.fn() },

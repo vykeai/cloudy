@@ -48,6 +48,7 @@ export interface AbstractModelRunOptions extends ClaudeRunOptions {
   taskType?: 'coding' | 'analysis' | 'planning' | 'review' | 'chat' | 'research';
 }
 
+<<<<<<< Updated upstream
 export interface OmnaiRunOptions {
   prompt: string;
   cwd: string;
@@ -70,6 +71,22 @@ export interface OmnaiRunOptions {
   disallowedTools?: string[];
   allowedReadPathsBeforeWrite?: string[];
 }
+=======
+  // Pass prompt via stdin to avoid command-line argument length limits with large prompts
+  // Strip CLAUDECODE so nested claude invocations aren't blocked by Claude Code's session guard.
+  // extendEnv: false prevents execa from re-merging process.env (which would re-add CLAUDECODE).
+  const childEnv = { ...process.env };
+  delete childEnv['CLAUDECODE'];
+
+  const proc = execa(claudePath, args, {
+    cwd,
+    reject: false,
+    cancelSignal: abortSignal,
+    input: prompt,
+    env: childEnv,
+    extendEnv: false,
+  });
+>>>>>>> Stashed changes
 
 // ── Dangerous command guard ──────────────────────────────────────────────────
 const DANGEROUS_BASH_RE =

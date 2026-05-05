@@ -206,6 +206,7 @@ export const runCommand = new Command('run')
   .option('--resume', 'Show already-completed tasks and ask to confirm before re-running')
   .option('--goal <goal>', 'Create a plan for this goal and run it immediately (skips cloudy init)')
   .option('--max-retries <n>', 'Max retries per task', parseInt)
+<<<<<<< Updated upstream
   .option('--verbose', 'Show live agent output for each task as it runs')
   .option('--run-review-model <model>', 'Model for post-run holistic review (haiku/sonnet/opus)')
   .option('--quality-review-model <model>', 'Model for Phase 2b code quality review (default: same as --task-review-model)')
@@ -218,6 +219,16 @@ export const runCommand = new Command('run')
   .option('--strict-batch', 'Deterministic batch mode: no creative recovery, stop on terminal failures and risk-preflight blocks')
   .option('--keel-slug <slug>', 'Keel project slug to write outcomes back to')
   .option('--keel-task <id>', 'Keel task ID to update on completion')
+=======
+  .option('--verbose', 'Show live Claude output for each task as it runs')
+  .option('--engine <engine>', 'Execution engine: claude-code (default) or pi-mono')
+  .option('--pi-provider <provider>', 'Pi-mono provider: anthropic, openai, google, ollama, etc.')
+  .option('--pi-model <model>', 'Pi-mono model ID: gpt-4o-mini, gemini-2.0-flash, qwen2.5-coder:7b, etc.')
+  .option('--pi-base-url <url>', 'Pi-mono base URL for OpenAI-compatible endpoints')
+  .option('--review-model <model>', 'Model for post-run holistic review (haiku/sonnet/opus)')
+  .option('--no-post-review', 'Skip post-run holistic review')
+  .option('--ci', 'Non-interactive mode: skip all prompts, disable dashboard, run to completion (use with --model)')
+>>>>>>> Stashed changes
   .action(
     async (opts: {
       model?: string;
@@ -257,6 +268,7 @@ export const runCommand = new Command('run')
       resume?: boolean;
       goal?: string;
       verbose?: boolean;
+<<<<<<< Updated upstream
       runReviewModel?: string;
       heartbeatInterval?: number;
       nonInteractive?: boolean;
@@ -284,6 +296,23 @@ export const runCommand = new Command('run')
           console.error(c(red, `✖  --non-interactive requires explicit model flags: ${missing.join(', ')}`));
           process.exit(1);
         }
+=======
+      engine?: string;
+      piProvider?: string;
+      piModel?: string;
+      piBaseUrl?: string;
+      reviewModel?: string;
+      postReview?: boolean; // false when --no-post-review
+      ci?: boolean;
+    }) => {
+      // CI mode: non-interactive, no dashboard, run straight through
+      const isCi = opts.ci || !process.stdout.isTTY;
+      if (isCi) {
+        opts.dashboard = false;
+        if (!opts.model && !opts.modelExecution) opts.modelExecution = 'sonnet';
+        if (!opts.modelValidation) opts.modelValidation = 'haiku';
+        if (opts.postReview !== false) opts.postReview = false;
+>>>>>>> Stashed changes
       }
       const cwd = process.cwd();
       await initLogger(cwd);
@@ -355,7 +384,11 @@ export const runCommand = new Command('run')
         { value: 'opus',   label: 'opus',   hint: 'most capable' },
       ];
 
+<<<<<<< Updated upstream
       if (!isNonInteractive && !opts.model && !opts.buildModel && !opts.goal) {
+=======
+      if (!isCi && !opts.model && !opts.modelExecution && !opts.goal) {
+>>>>>>> Stashed changes
         const projectName = path.basename(cwd);
         p.intro(`${c(cyan + bold, '☁️  cloudy build')}  ${c(bold, projectName)}`);
 
@@ -1258,6 +1291,16 @@ export const runCommand = new Command('run')
       }
 
       // ── Run ───────────────────────────────────────────────────────────
+<<<<<<< Updated upstream
       await executeRun();
+=======
+      await executeRun(dashboardBroadcast);
+      if (config.dashboard && !isCi) {
+        dashboardBroadcast?.({ type: 'run_status', status: isRunning ? 'running' : 'completed' });
+        console.log(`\n${c(cyan, '🌐')}  ${c(dim, 'dashboard still active  ·  q or ctrl+c to exit')}\n`);
+        await keepAliveUntilSignal(() => { abortCurrentRun?.(); });
+        await dashboardClose?.();
+      }
+>>>>>>> Stashed changes
     },
   );
