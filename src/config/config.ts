@@ -203,6 +203,7 @@ export async function loadConfig(cwd: string): Promise<CloudyConfig> {
     worktrees: saved.worktrees ?? effectiveDefaults.worktrees,
     runBranch: saved.runBranch ?? effectiveDefaults.runBranch,
     approval: { ...effectiveDefaults.approval, ...saved.approval },
+<<<<<<< Updated upstream
     engine: saved.buildEngine ?? effectiveDefaults.engine,
     provider: saved.buildProvider ?? effectiveDefaults.provider,
     account: saved.buildAccount ?? effectiveDefaults.account,
@@ -217,6 +218,16 @@ export async function loadConfig(cwd: string): Promise<CloudyConfig> {
       model: savedModels.runReview ?? effectiveDefaults.review.model,
     },
     keel: saved.keel ?? effectiveDefaults.keel,
+=======
+    engine: saved.engine ?? effectiveDefaults.engine,
+    provider: saved.provider ?? effectiveDefaults.provider,
+    executionModelId: saved.executionModelId ?? effectiveDefaults.executionModelId,
+    executionAccountId: saved.executionAccountId ?? effectiveDefaults.executionAccountId,
+    planningRuntime: { ...effectiveDefaults.planningRuntime, ...saved.planningRuntime },
+    validationRuntime: { ...effectiveDefaults.validationRuntime, ...saved.validationRuntime },
+    reviewRuntime: { ...effectiveDefaults.reviewRuntime, ...saved.reviewRuntime },
+    review: { ...effectiveDefaults.review, ...saved.review },
+>>>>>>> Stashed changes
   };
 
   const errors = validateConfig(config);

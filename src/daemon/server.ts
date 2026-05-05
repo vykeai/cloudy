@@ -339,6 +339,7 @@ function getRunningProcess(projectId: string, type?: ActiveProcess['type']): Act
 }
 
 interface RuntimeRouteFields {
+<<<<<<< Updated upstream
   planEngine?: string;
   planProvider?: string;
   planAccount?: string;
@@ -364,6 +365,27 @@ interface RunRuntimeRouteFields extends RuntimeRouteFields {
   buildEffort?: string;
   keelSlug?: string;
   keelTask?: string;
+=======
+  planningEngine?: string;
+  planningProvider?: string;
+  planningModelId?: string;
+  planningAccountId?: string;
+  validationEngine?: string;
+  validationProvider?: string;
+  validationModelId?: string;
+  validationAccountId?: string;
+  reviewEngine?: string;
+  reviewProvider?: string;
+  reviewModelId?: string;
+  reviewAccountId?: string;
+}
+
+interface RunRuntimeRouteFields extends RuntimeRouteFields {
+  engine?: string;
+  provider?: string;
+  executionModelId?: string;
+  executionAccountId?: string;
+>>>>>>> Stashed changes
 }
 
 interface RuntimePreflight {
@@ -374,6 +396,7 @@ interface RuntimePreflight {
 }
 
 interface RuntimeDefaults {
+<<<<<<< Updated upstream
   build?: Pick<RunRuntimeRouteFields, 'buildEngine' | 'buildProvider' | 'buildAccount' | 'buildModelId' | 'buildEffort'>;
   plan?: Pick<RuntimeRouteFields, 'planEngine' | 'planProvider' | 'planAccount' | 'planModelId' | 'planEffort'>;
   taskReview?: Pick<RuntimeRouteFields, 'taskReviewEngine' | 'taskReviewProvider' | 'taskReviewAccount' | 'taskReviewModelId' | 'taskReviewEffort'>;
@@ -385,6 +408,12 @@ interface RuntimeDefaults {
     runReviewModel?: string;
     qualityReviewModel?: string;
   };
+=======
+  execution?: Pick<RunRuntimeRouteFields, 'engine' | 'provider' | 'executionAccountId'>;
+  planning?: Pick<RuntimeRouteFields, 'planningEngine' | 'planningProvider' | 'planningAccountId'>;
+  validation?: Pick<RuntimeRouteFields, 'validationEngine' | 'validationProvider' | 'validationAccountId'>;
+  review?: Pick<RuntimeRouteFields, 'reviewEngine' | 'reviewProvider' | 'reviewAccountId'>;
+>>>>>>> Stashed changes
 }
 
 function appendOptionalFlag(args: string[], flag: string, value: string | undefined): void {
@@ -393,36 +422,58 @@ function appendOptionalFlag(args: string[], flag: string, value: string | undefi
 
 function buildPlanRuntimeArgs(runtime: RuntimeRouteFields): string[] {
   const args: string[] = [];
+<<<<<<< Updated upstream
   appendOptionalFlag(args, '--plan-engine', runtime.planEngine);
   appendOptionalFlag(args, '--plan-provider', runtime.planProvider);
   appendOptionalFlag(args, '--plan-account', runtime.planAccount);
   appendOptionalFlag(args, '--plan-model-id', runtime.planModelId);
   appendOptionalFlag(args, '--plan-effort', runtime.planEffort);
+=======
+  appendOptionalFlag(args, '--planning-engine', runtime.planningEngine);
+  appendOptionalFlag(args, '--planning-provider', runtime.planningProvider);
+  appendOptionalFlag(args, '--planning-model-id', runtime.planningModelId);
+  appendOptionalFlag(args, '--planning-account-id', runtime.planningAccountId);
+>>>>>>> Stashed changes
   return args;
 }
 
 function buildTaskReviewRuntimeArgs(runtime: RuntimeRouteFields): string[] {
   const args: string[] = [];
+<<<<<<< Updated upstream
   appendOptionalFlag(args, '--task-review-engine', runtime.taskReviewEngine);
   appendOptionalFlag(args, '--task-review-provider', runtime.taskReviewProvider);
   appendOptionalFlag(args, '--task-review-account', runtime.taskReviewAccount);
   appendOptionalFlag(args, '--task-review-model-id', runtime.taskReviewModelId);
   appendOptionalFlag(args, '--task-review-effort', runtime.taskReviewEffort);
+=======
+  appendOptionalFlag(args, '--validation-engine', runtime.validationEngine);
+  appendOptionalFlag(args, '--validation-provider', runtime.validationProvider);
+  appendOptionalFlag(args, '--validation-model-id', runtime.validationModelId);
+  appendOptionalFlag(args, '--validation-account-id', runtime.validationAccountId);
+>>>>>>> Stashed changes
   return args;
 }
 
 function buildRunReviewRuntimeArgs(runtime: RuntimeRouteFields): string[] {
   const args: string[] = [];
+<<<<<<< Updated upstream
   appendOptionalFlag(args, '--run-review-engine', runtime.runReviewEngine);
   appendOptionalFlag(args, '--run-review-provider', runtime.runReviewProvider);
   appendOptionalFlag(args, '--run-review-account', runtime.runReviewAccount);
   appendOptionalFlag(args, '--run-review-model-id', runtime.runReviewModelId);
   appendOptionalFlag(args, '--run-review-effort', runtime.runReviewEffort);
+=======
+  appendOptionalFlag(args, '--review-engine', runtime.reviewEngine);
+  appendOptionalFlag(args, '--review-provider', runtime.reviewProvider);
+  appendOptionalFlag(args, '--review-model-id', runtime.reviewModelId);
+  appendOptionalFlag(args, '--review-account-id', runtime.reviewAccountId);
+>>>>>>> Stashed changes
   return args;
 }
 
 function buildRunRuntimeArgs(runtime: RunRuntimeRouteFields): string[] {
   const args: string[] = [];
+<<<<<<< Updated upstream
   appendOptionalFlag(args, '--build-engine', runtime.buildEngine);
   appendOptionalFlag(args, '--build-provider', runtime.buildProvider);
   appendOptionalFlag(args, '--build-account', runtime.buildAccount);
@@ -430,6 +481,12 @@ function buildRunRuntimeArgs(runtime: RunRuntimeRouteFields): string[] {
   appendOptionalFlag(args, '--build-effort', runtime.buildEffort);
   appendOptionalFlag(args, '--keel-slug', runtime.keelSlug);
   appendOptionalFlag(args, '--keel-task', runtime.keelTask);
+=======
+  appendOptionalFlag(args, '--engine', runtime.engine);
+  appendOptionalFlag(args, '--provider', runtime.provider);
+  appendOptionalFlag(args, '--execution-model-id', runtime.executionModelId);
+  appendOptionalFlag(args, '--execution-account-id', runtime.executionAccountId);
+>>>>>>> Stashed changes
   args.push(
     ...buildPlanRuntimeArgs(runtime),
     ...buildTaskReviewRuntimeArgs(runtime),
@@ -476,6 +533,7 @@ async function loadRuntimeDefaults(projectPath: string, keelTaskId?: string): Pr
     failBlocksRun: false,
   };
   return {
+<<<<<<< Updated upstream
     build: {
       buildEngine: config.engine,
       buildProvider: config.provider,
@@ -510,6 +568,27 @@ async function loadRuntimeDefaults(projectPath: string, keelTaskId?: string): Pr
       taskReviewModel: models.validation,
       runReviewModel: review.model,
       qualityReviewModel: models.qualityReview,
+=======
+    execution: {
+      engine: config.engine,
+      provider: config.provider,
+      executionAccountId: config.executionAccountId,
+    },
+    planning: {
+      planningEngine: config.planningRuntime?.engine,
+      planningProvider: config.planningRuntime?.provider,
+      planningAccountId: config.planningRuntime?.accountId,
+    },
+    validation: {
+      validationEngine: config.validationRuntime?.engine,
+      validationProvider: config.validationRuntime?.provider,
+      validationAccountId: config.validationRuntime?.accountId,
+    },
+    review: {
+      reviewEngine: config.reviewRuntime?.engine,
+      reviewProvider: config.reviewRuntime?.provider,
+      reviewAccountId: config.reviewRuntime?.accountId,
+>>>>>>> Stashed changes
     },
   };
 }
@@ -1501,18 +1580,26 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
           planName?: string;
           planModel?: string;
           planIds?: string[];
+<<<<<<< Updated upstream
           planEngine?: string;
           planProvider?: string;
           planAccount?: string;
           planModelId?: string;
           planEffort?: string;
           keelTask?: string;
+=======
+          planningEngine?: string;
+          planningProvider?: string;
+          planningModelId?: string;
+          planningAccountId?: string;
+>>>>>>> Stashed changes
         };
         const runtimeDefaults = await loadRuntimeDefaults(meta.path, body.keelTask);
         try {
           await preflightRuntime(resolveRuntimePreflight(
             'planning',
             {
+<<<<<<< Updated upstream
               engine: body.planEngine,
               provider: body.planProvider,
               account: body.planAccount,
@@ -1521,6 +1608,16 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
               engine: runtimeDefaults.plan?.planEngine,
               provider: runtimeDefaults.plan?.planProvider,
               account: runtimeDefaults.plan?.planAccount,
+=======
+              engine: body.planningEngine,
+              provider: body.planningProvider,
+              account: body.planningAccountId,
+            },
+            {
+              engine: runtimeDefaults.planning?.planningEngine,
+              provider: runtimeDefaults.planning?.planningProvider,
+              account: runtimeDefaults.planning?.planningAccountId,
+>>>>>>> Stashed changes
             },
           ));
         } catch (err) {
@@ -1616,6 +1713,7 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
           maxRetries?: number;
           buildEffort?: string;
           worktrees?: boolean;
+<<<<<<< Updated upstream
           buildEngine?: string;
           buildProvider?: string;
           buildAccount?: string;
@@ -1637,12 +1735,31 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
           runReviewEffort?: string;
           keelSlug?: string;
           keelTask?: string;
+=======
+          engine?: string;
+          provider?: string;
+          executionModelId?: string;
+          executionAccountId?: string;
+          planningEngine?: string;
+          planningProvider?: string;
+          planningModelId?: string;
+          planningAccountId?: string;
+          validationEngine?: string;
+          validationProvider?: string;
+          validationModelId?: string;
+          validationAccountId?: string;
+          reviewEngine?: string;
+          reviewProvider?: string;
+          reviewModelId?: string;
+          reviewAccountId?: string;
+>>>>>>> Stashed changes
         };
         const runtimeDefaults = await loadRuntimeDefaults(meta.path, body.keelTask);
         try {
           await preflightRuntime(resolveRuntimePreflight(
             'coding',
             {
+<<<<<<< Updated upstream
               engine: body.buildEngine,
               provider: body.buildProvider,
               account: body.buildAccount,
@@ -1651,11 +1768,35 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
               engine: runtimeDefaults.build?.buildEngine,
               provider: runtimeDefaults.build?.buildProvider,
               account: runtimeDefaults.build?.buildAccount,
+=======
+              engine: body.engine,
+              provider: body.provider,
+              account: body.executionAccountId,
+            },
+            {
+              engine: runtimeDefaults.execution?.engine,
+              provider: runtimeDefaults.execution?.provider,
+              account: runtimeDefaults.execution?.executionAccountId,
             },
           ));
           await preflightRuntime(resolveRuntimePreflight(
             'review',
             {
+              engine: body.validationEngine,
+              provider: body.validationProvider,
+              account: body.validationAccountId,
+            },
+            {
+              engine: runtimeDefaults.validation?.validationEngine,
+              provider: runtimeDefaults.validation?.validationProvider,
+              account: runtimeDefaults.validation?.validationAccountId,
+>>>>>>> Stashed changes
+            },
+          ));
+          await preflightRuntime(resolveRuntimePreflight(
+            'review',
+            {
+<<<<<<< Updated upstream
               engine: body.taskReviewEngine,
               provider: body.taskReviewProvider,
               account: body.taskReviewAccount,
@@ -1677,6 +1818,16 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
               engine: runtimeDefaults.runReview?.runReviewEngine,
               provider: runtimeDefaults.runReview?.runReviewProvider,
               account: runtimeDefaults.runReview?.runReviewAccount,
+=======
+              engine: body.reviewEngine,
+              provider: body.reviewProvider,
+              account: body.reviewAccountId,
+            },
+            {
+              engine: runtimeDefaults.review?.reviewEngine,
+              provider: runtimeDefaults.review?.reviewProvider,
+              account: runtimeDefaults.review?.reviewAccountId,
+>>>>>>> Stashed changes
             },
           ));
         } catch (err) {
@@ -1732,6 +1883,7 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
           planModel?: string;
           taskReviewModel?: string;
           runReviewModel?: string;
+<<<<<<< Updated upstream
           planEngine?: string;
           planProvider?: string;
           planAccount?: string;
@@ -1749,12 +1901,27 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
           runReviewEffort?: string;
           keelSlug?: string;
           keelTask?: string;
+=======
+          planningEngine?: string;
+          planningProvider?: string;
+          planningModelId?: string;
+          planningAccountId?: string;
+          validationEngine?: string;
+          validationProvider?: string;
+          validationModelId?: string;
+          validationAccountId?: string;
+          reviewEngine?: string;
+          reviewProvider?: string;
+          reviewModelId?: string;
+          reviewAccountId?: string;
+>>>>>>> Stashed changes
         };
         const runtimeDefaults = await loadRuntimeDefaults(meta.path, body.keelTask);
         try {
           await preflightRuntime(resolveRuntimePreflight(
             'planning',
             {
+<<<<<<< Updated upstream
               engine: body.planEngine,
               provider: body.planProvider,
               account: body.planAccount,
@@ -1763,11 +1930,22 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
               engine: runtimeDefaults.plan?.planEngine,
               provider: runtimeDefaults.plan?.planProvider,
               account: runtimeDefaults.plan?.planAccount,
+=======
+              engine: body.planningEngine,
+              provider: body.planningProvider,
+              account: body.planningAccountId,
+            },
+            {
+              engine: runtimeDefaults.planning?.planningEngine,
+              provider: runtimeDefaults.planning?.planningProvider,
+              account: runtimeDefaults.planning?.planningAccountId,
+>>>>>>> Stashed changes
             },
           ));
           await preflightRuntime(resolveRuntimePreflight(
             'review',
             {
+<<<<<<< Updated upstream
               engine: body.taskReviewEngine,
               provider: body.taskReviewProvider,
               account: body.taskReviewAccount,
@@ -1776,11 +1954,22 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
               engine: runtimeDefaults.taskReview?.taskReviewEngine,
               provider: runtimeDefaults.taskReview?.taskReviewProvider,
               account: runtimeDefaults.taskReview?.taskReviewAccount,
+=======
+              engine: body.validationEngine,
+              provider: body.validationProvider,
+              account: body.validationAccountId,
+            },
+            {
+              engine: runtimeDefaults.validation?.validationEngine,
+              provider: runtimeDefaults.validation?.validationProvider,
+              account: runtimeDefaults.validation?.validationAccountId,
+>>>>>>> Stashed changes
             },
           ));
           await preflightRuntime(resolveRuntimePreflight(
             'review',
             {
+<<<<<<< Updated upstream
               engine: body.runReviewEngine,
               provider: body.runReviewProvider,
               account: body.runReviewAccount,
@@ -1789,6 +1978,16 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
               engine: runtimeDefaults.runReview?.runReviewEngine,
               provider: runtimeDefaults.runReview?.runReviewProvider,
               account: runtimeDefaults.runReview?.runReviewAccount,
+=======
+              engine: body.reviewEngine,
+              provider: body.reviewProvider,
+              account: body.reviewAccountId,
+            },
+            {
+              engine: runtimeDefaults.review?.reviewEngine,
+              provider: runtimeDefaults.review?.reviewProvider,
+              account: runtimeDefaults.review?.reviewAccountId,
+>>>>>>> Stashed changes
             },
           ));
         } catch (err) {
@@ -1918,6 +2117,7 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
           maxRetries?: number;
           buildEffort?: string;
           worktrees?: boolean;
+<<<<<<< Updated upstream
           buildEngine?: string;
           buildProvider?: string;
           buildAccount?: string;
@@ -1937,12 +2137,31 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
           runReviewAccount?: string;
           runReviewModelId?: string;
           runReviewEffort?: string;
+=======
+          engine?: string;
+          provider?: string;
+          executionModelId?: string;
+          executionAccountId?: string;
+          planningEngine?: string;
+          planningProvider?: string;
+          planningModelId?: string;
+          planningAccountId?: string;
+          validationEngine?: string;
+          validationProvider?: string;
+          validationModelId?: string;
+          validationAccountId?: string;
+          reviewEngine?: string;
+          reviewProvider?: string;
+          reviewModelId?: string;
+          reviewAccountId?: string;
+>>>>>>> Stashed changes
         };
         const runtimeDefaults = await loadRuntimeDefaults(meta.path);
         try {
           await preflightRuntime(resolveRuntimePreflight(
             'coding',
             {
+<<<<<<< Updated upstream
               engine: body.buildEngine,
               provider: body.buildProvider,
               account: body.buildAccount,
@@ -1951,11 +2170,35 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
               engine: runtimeDefaults.build?.buildEngine,
               provider: runtimeDefaults.build?.buildProvider,
               account: runtimeDefaults.build?.buildAccount,
+=======
+              engine: body.engine,
+              provider: body.provider,
+              account: body.executionAccountId,
+            },
+            {
+              engine: runtimeDefaults.execution?.engine,
+              provider: runtimeDefaults.execution?.provider,
+              account: runtimeDefaults.execution?.executionAccountId,
             },
           ));
           await preflightRuntime(resolveRuntimePreflight(
             'review',
             {
+              engine: body.validationEngine,
+              provider: body.validationProvider,
+              account: body.validationAccountId,
+            },
+            {
+              engine: runtimeDefaults.validation?.validationEngine,
+              provider: runtimeDefaults.validation?.validationProvider,
+              account: runtimeDefaults.validation?.validationAccountId,
+>>>>>>> Stashed changes
+            },
+          ));
+          await preflightRuntime(resolveRuntimePreflight(
+            'review',
+            {
+<<<<<<< Updated upstream
               engine: body.taskReviewEngine,
               provider: body.taskReviewProvider,
               account: body.taskReviewAccount,
@@ -1977,6 +2220,16 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
               engine: runtimeDefaults.runReview?.runReviewEngine,
               provider: runtimeDefaults.runReview?.runReviewProvider,
               account: runtimeDefaults.runReview?.runReviewAccount,
+=======
+              engine: body.reviewEngine,
+              provider: body.reviewProvider,
+              account: body.reviewAccountId,
+            },
+            {
+              engine: runtimeDefaults.review?.reviewEngine,
+              provider: runtimeDefaults.review?.reviewProvider,
+              account: runtimeDefaults.review?.reviewAccountId,
+>>>>>>> Stashed changes
             },
           ));
         } catch (err) {

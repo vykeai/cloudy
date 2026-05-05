@@ -650,7 +650,11 @@ export class Orchestrator {
         prompt,
         engine: this.config.engine,
         provider: this.config.provider,
+<<<<<<< Updated upstream
         account: this.config.account,
+=======
+        accountId: this.config.executionAccountId,
+>>>>>>> Stashed changes
         claudeModel: this.config.models.execution,
         modelId: this.config.executionModelId,
         effort: this.config.executionEffort,
@@ -766,7 +770,11 @@ Write a concise paragraph (max 150 words) covering: what files/modules were crea
         provider: reviewRuntime.provider,
         account: reviewRuntime.account,
         modelId: reviewRuntime.modelId,
+<<<<<<< Updated upstream
         effort: reviewRuntime.effort,
+=======
+        accountId: reviewRuntime.accountId,
+>>>>>>> Stashed changes
         taskType: 'review',
       });
       if (result.success && result.output?.trim()) {
@@ -1172,7 +1180,11 @@ Write a concise paragraph (max 150 words) covering: what files/modules were crea
           prompt,
           engine,
           provider,
+<<<<<<< Updated upstream
           account: this.config.account,
+=======
+          accountId: this.config.executionAccountId,
+>>>>>>> Stashed changes
           modelId: this.config.executionModelId,
           claudeModel: executionModel,
           effort: this.config.executionEffort ?? executionDefaults.effort,

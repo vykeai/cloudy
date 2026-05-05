@@ -60,7 +60,11 @@ export interface PhaseRuntimeConfig {
    */
   account?: string;
   modelId?: string;
+<<<<<<< Updated upstream
   effort?: ThinkingEffort;
+=======
+  accountId?: string;
+>>>>>>> Stashed changes
   configDir?: string;
 }
 
@@ -315,7 +319,11 @@ export interface CloudyConfig {
   provider?: Provider;         // provider/auth route (e.g. claude, codex, openai)
   account?: string;           // named account route within the provider/runtime
   executionModelId?: string;   // provider-native execution model ID (e.g. o3, codex-mini)
+<<<<<<< Updated upstream
   executionEffort?: ThinkingEffort; // execution thinking budget (CLI --effort overrides)
+=======
+  executionAccountId?: string; // provider account/profile ID from omnai estate (e.g. claude-main)
+>>>>>>> Stashed changes
   planningRuntime?: PhaseRuntimeConfig;   // provider/engine route for planning calls
   validationRuntime?: PhaseRuntimeConfig; // provider/engine route for per-task AI validation
   reviewRuntime?: PhaseRuntimeConfig;     // provider/engine route for holistic review and review-side prompts

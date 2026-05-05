@@ -44,6 +44,10 @@ export interface AbstractModelRunOptions extends ClaudeRunOptions {
   provider?: Provider;
   account?: string;
   modelId?: string;
+<<<<<<< Updated upstream
+=======
+  accountId?: string;
+>>>>>>> Stashed changes
   configDir?: string;
   taskType?: 'coding' | 'analysis' | 'planning' | 'review' | 'chat' | 'research';
 }
@@ -55,6 +59,10 @@ export interface OmnaiRunOptions {
   provider?: Provider;
   account?: string;
   modelId?: string;
+<<<<<<< Updated upstream
+=======
+  accountId?: string;
+>>>>>>> Stashed changes
   configDir?: string;
   onOutput?: (text: string) => void;
   onToolUse?: (toolName: string, toolInput: unknown) => void;
@@ -95,19 +103,31 @@ function rewritePromptForWorktree(prompt: string, cwd: string): string {
 async function resolveRuntimeAccount(options: {
   engine?: Engine;
   provider?: Provider;
+<<<<<<< Updated upstream
   account?: string;
+=======
+  accountId?: string;
+>>>>>>> Stashed changes
   configDir?: string;
 }): Promise<{ engine?: Engine; provider?: Provider; env?: Record<string, string> }> {
   let resolvedEngine = options.engine;
   let resolvedProvider = options.provider;
   let resolvedConfigDir = options.configDir;
 
+<<<<<<< Updated upstream
   if (options.account && !resolvedConfigDir) {
+=======
+  if (options.accountId && !resolvedConfigDir) {
+>>>>>>> Stashed changes
     try {
       const { OmnaiClient, loadEstate } = await import('omnai');
       const client = new OmnaiClient();
       const estate = await client.getEstate().catch(() => loadEstate());
+<<<<<<< Updated upstream
       const account = estate.accounts?.[options.account];
+=======
+      const account = estate.accounts?.[options.accountId];
+>>>>>>> Stashed changes
       if (account) {
         resolvedEngine = resolvedEngine ?? (account.engine as Engine);
         resolvedProvider = resolvedProvider ?? (account.provider as Provider);
@@ -147,6 +167,10 @@ export async function runOmnai(options: OmnaiRunOptions): Promise<ClaudeRunResul
     provider,
     account,
     modelId,
+<<<<<<< Updated upstream
+=======
+    accountId,
+>>>>>>> Stashed changes
     configDir,
     onOutput,
     onToolUse,
@@ -166,14 +190,24 @@ export async function runOmnai(options: OmnaiRunOptions): Promise<ClaudeRunResul
   const runtime = await resolveRuntimeAccount({
     engine,
     provider,
+<<<<<<< Updated upstream
     account,
+=======
+    accountId,
+>>>>>>> Stashed changes
     configDir,
   });
 
   const runner = await selectViaDaemon({
+<<<<<<< Updated upstream
     provider: runtime.provider ?? provider,
     engine: runtime.engine ?? engine,
     account,
+=======
+    provider: runtime.provider,
+    engine: runtime.engine,
+    account: accountId,
+>>>>>>> Stashed changes
     taskType: taskType ?? 'coding',
   });
   const rewrittenPrompt = rewritePromptForWorktree(prompt, cwd);
@@ -317,9 +351,14 @@ export async function runOmnai(options: OmnaiRunOptions): Promise<ClaudeRunResul
     maxBudgetUsd,
     effort,
     thinking,
+<<<<<<< Updated upstream
     env: runtime.env,
     allowedTools,
     disallowedTools,
+=======
+    account: accountId,
+    env: runtime.env,
+>>>>>>> Stashed changes
   };
 
   if (runner.engine === 'claude-code') {
@@ -422,6 +461,10 @@ export async function runAbstractModel(
     provider: options.provider ?? 'claude',
     account: options.account,
     modelId: resolvedModelId,
+<<<<<<< Updated upstream
+=======
+    accountId: options.accountId,
+>>>>>>> Stashed changes
     configDir: options.configDir,
     onOutput: options.onOutput,
     onToolUse: options.onToolUse,

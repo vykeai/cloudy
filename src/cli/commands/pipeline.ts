@@ -97,6 +97,7 @@ export const pipelineCommand = new Command('chain')
   .option('--run-review-model <model>', 'Post-phase holistic review model')
   .option('--plan-model <model>', 'Plan model (default: sonnet)')
   .option('--quality-review-model <model>', 'Model for Phase 2b code quality review (default: same as --task-review-model)')
+<<<<<<< Updated upstream
   .option('--plan-engine <engine>', 'Plan engine for all phases')
   .option('--plan-provider <provider>', 'Plan provider/auth route for all phases (e.g. claude subscription, codex subscription, openai API)')
   .option('--plan-account <account>', 'Plan account route within the provider/runtime for all phases')
@@ -116,6 +117,20 @@ export const pipelineCommand = new Command('chain')
   .option('--build-effort <level>', 'Build effort for all phases: low|medium|high|max')
   .option('--keel-slug <slug>', 'Keel project slug to write outcomes back to')
   .option('--keel-task <id>', 'Keel task ID to read runtime defaults from and update on completion')
+=======
+  .option('--planning-engine <engine>', 'Planning engine for all phases')
+  .option('--planning-provider <provider>', 'Planning provider/auth route for all phases (e.g. claude subscription, codex subscription, openai API)')
+  .option('--planning-model-id <id>', 'Provider-native planning model ID for all phases')
+  .option('--planning-account-id <id>', 'Planning provider account/profile ID from omnai estate for all phases')
+  .option('--validation-engine <engine>', 'Per-task AI validation engine for all phases')
+  .option('--validation-provider <provider>', 'Per-task AI validation provider/auth route for all phases (e.g. claude subscription, codex subscription, openai API)')
+  .option('--validation-model-id <id>', 'Provider-native per-task AI validation model ID for all phases')
+  .option('--validation-account-id <id>', 'Validation provider account/profile ID from omnai estate for all phases')
+  .option('--review-engine <engine>', 'Holistic review / review-side engine for all phases')
+  .option('--review-provider <provider>', 'Holistic review / review-side provider/auth route for all phases (e.g. claude subscription, codex subscription, openai API)')
+  .option('--review-model-id <id>', 'Provider-native holistic review model ID for all phases')
+  .option('--review-account-id <id>', 'Review provider account/profile ID from omnai estate for all phases')
+>>>>>>> Stashed changes
   .option('--no-auto-fix', 'Disable automatic fix-task generation from review notes')
   .option('--strict-batch', 'Deterministic batch mode: use task graphs as-is, disable creative recovery, and stop on terminal failures')
   .option('--verbose', 'Pass --verbose to each run')
@@ -127,6 +142,7 @@ export const pipelineCommand = new Command('chain')
     taskReviewModel?: string;
     qualityReviewModel?: string;
     runReviewModel?: string;
+<<<<<<< Updated upstream
     planModel?: string;
     planEngine?: string;
     planProvider?: string;
@@ -147,6 +163,21 @@ export const pipelineCommand = new Command('chain')
     buildEffort?: string;
     keelSlug?: string;
     keelTask?: string;
+=======
+    planningModel?: string;
+    planningEngine?: string;
+    planningProvider?: string;
+    planningModelId?: string;
+    planningAccountId?: string;
+    validationEngine?: string;
+    validationProvider?: string;
+    validationModelId?: string;
+    validationAccountId?: string;
+    reviewEngine?: string;
+    reviewProvider?: string;
+    reviewModelId?: string;
+    reviewAccountId?: string;
+>>>>>>> Stashed changes
     autoFix?: boolean;
     strictBatch?: boolean;
     verbose?: boolean;
@@ -155,6 +186,7 @@ export const pipelineCommand = new Command('chain')
   }) => {
     const cwd = process.cwd();
     await initLogger(cwd);
+<<<<<<< Updated upstream
     const baseConfig = await loadConfig(cwd);
     const keelTaskRuntime = await loadKeelTaskRuntime(cwd, opts.keelTask ?? baseConfig.keel?.taskId);
     const config = applyKeelTaskRuntime(baseConfig, keelTaskRuntime);
@@ -191,6 +223,21 @@ export const pipelineCommand = new Command('chain')
         console.log(c(yellow, '  [stale-state check] task-level execution runtime override detected — make sure this worktree contains the latest keel/tasks/*.json before running.'));
       }
     }
+=======
+    const config = await loadConfig(cwd);
+    if (opts.planningEngine) config.planningRuntime = { ...config.planningRuntime, engine: opts.planningEngine as typeof config.engine };
+    if (opts.planningProvider) config.planningRuntime = { ...config.planningRuntime, provider: opts.planningProvider };
+    if (opts.planningModelId) config.planningRuntime = { ...config.planningRuntime, modelId: opts.planningModelId };
+    if (opts.planningAccountId) config.planningRuntime = { ...config.planningRuntime, accountId: opts.planningAccountId };
+    if (opts.validationEngine) config.validationRuntime = { ...config.validationRuntime, engine: opts.validationEngine as typeof config.engine };
+    if (opts.validationProvider) config.validationRuntime = { ...config.validationRuntime, provider: opts.validationProvider };
+    if (opts.validationModelId) config.validationRuntime = { ...config.validationRuntime, modelId: opts.validationModelId };
+    if (opts.validationAccountId) config.validationRuntime = { ...config.validationRuntime, accountId: opts.validationAccountId };
+    if (opts.reviewEngine) config.reviewRuntime = { ...config.reviewRuntime, engine: opts.reviewEngine as typeof config.engine };
+    if (opts.reviewProvider) config.reviewRuntime = { ...config.reviewRuntime, provider: opts.reviewProvider };
+    if (opts.reviewModelId) config.reviewRuntime = { ...config.reviewRuntime, modelId: opts.reviewModelId };
+    if (opts.reviewAccountId) config.reviewRuntime = { ...config.reviewRuntime, accountId: opts.reviewAccountId };
+>>>>>>> Stashed changes
 
     if (opts.spec.length === 0) {
       console.error(c(red, '✖  --spec required (repeatable): cloudy chain --spec p1.md --spec p2.md'));
@@ -264,12 +311,20 @@ export const pipelineCommand = new Command('chain')
           '--spec', path.resolve(cwd, specPath),
           '--no-review',
           '--yes',
+<<<<<<< Updated upstream
           '--plan-model', planningModel,
           ...(config.planningRuntime?.engine ? ['--plan-engine', config.planningRuntime.engine] : []),
           ...(config.planningRuntime?.provider ? ['--plan-provider', config.planningRuntime.provider] : []),
           ...(config.planningRuntime?.account ? ['--plan-account', config.planningRuntime.account] : []),
           ...(config.planningRuntime?.modelId ? ['--plan-model-id', config.planningRuntime.modelId] : []),
           ...(config.planningRuntime?.effort ? ['--plan-effort', config.planningRuntime.effort] : []),
+=======
+          '--planning-model', planningModel,
+          ...(config.planningRuntime?.engine ? ['--planning-engine', config.planningRuntime.engine] : []),
+          ...(config.planningRuntime?.provider ? ['--planning-provider', config.planningRuntime.provider] : []),
+          ...(config.planningRuntime?.modelId ? ['--planning-model-id', config.planningRuntime.modelId] : []),
+          ...(config.planningRuntime?.accountId ? ['--planning-account-id', config.planningRuntime.accountId] : []),
+>>>>>>> Stashed changes
           '--run-name', runName,
         ], {
           stdio: 'inherit',
@@ -312,6 +367,7 @@ export const pipelineCommand = new Command('chain')
         cloudyBin,
         'run',
         '--non-interactive',
+<<<<<<< Updated upstream
         '--build-model', opts.buildModel ?? config.models.execution,
         '--task-review-model', opts.taskReviewModel ?? config.models.validation,
         '--run-review-model', opts.runReviewModel ?? config.review.model,
@@ -332,6 +388,19 @@ export const pipelineCommand = new Command('chain')
         ...(config.reviewRuntime?.effort ? ['--run-review-effort', config.reviewRuntime.effort] : []),
         ...(opts.keelSlug ?? config.keel?.slug ? ['--keel-slug', opts.keelSlug ?? config.keel?.slug ?? ''] : []),
         ...(opts.keelTask ?? config.keel?.taskId ? ['--keel-task', opts.keelTask ?? config.keel?.taskId ?? ''] : []),
+=======
+        '--execution-model', opts.executionModel!,
+        '--task-review-model', opts.taskReviewModel!,
+        '--run-review-model', opts.runReviewModel!,
+        ...(config.validationRuntime?.engine ? ['--validation-engine', config.validationRuntime.engine] : []),
+        ...(config.validationRuntime?.provider ? ['--validation-provider', config.validationRuntime.provider] : []),
+        ...(config.validationRuntime?.modelId ? ['--validation-model-id', config.validationRuntime.modelId] : []),
+        ...(config.validationRuntime?.accountId ? ['--validation-account-id', config.validationRuntime.accountId] : []),
+        ...(config.reviewRuntime?.engine ? ['--review-engine', config.reviewRuntime.engine] : []),
+        ...(config.reviewRuntime?.provider ? ['--review-provider', config.reviewRuntime.provider] : []),
+        ...(config.reviewRuntime?.modelId ? ['--review-model-id', config.reviewRuntime.modelId] : []),
+        ...(config.reviewRuntime?.accountId ? ['--review-account-id', config.reviewRuntime.accountId] : []),
+>>>>>>> Stashed changes
       ];
       if (opts.strictBatch) runArgs.push('--strict-batch');
       if (opts.qualityReviewModel) runArgs.push('--quality-review-model', opts.qualityReviewModel);

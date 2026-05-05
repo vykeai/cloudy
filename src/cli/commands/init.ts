@@ -205,12 +205,20 @@ export const initCommand = new Command('plan')
   .description('Decompose a goal into tasks using the configured planning runtime')
   .argument('[goal]', 'The project goal to decompose into tasks')
   .option('--model <model>', 'Model for all phases')
+<<<<<<< Updated upstream
   .option('--plan-model <model>', 'Model for plan phase')
   .option('--plan-engine <engine>', 'Plan engine (e.g. claude-code, codex, pi-mono)')
   .option('--plan-provider <provider>', 'Plan provider/auth route (e.g. claude subscription, codex subscription, openai API)')
   .option('--plan-account <account>', 'Plan account route within the provider/runtime')
   .option('--plan-model-id <id>', 'Provider-native plan model ID')
   .option('--plan-effort <level>', 'Plan effort: low|medium|high|max')
+=======
+  .option('--planning-model <model>', 'Model for planning phase')
+  .option('--planning-engine <engine>', 'Planning engine (e.g. claude-code, codex, pi-mono)')
+  .option('--planning-provider <provider>', 'Planning provider/auth route (e.g. claude subscription, codex subscription, openai API)')
+  .option('--planning-model-id <id>', 'Provider-native planning model ID')
+  .option('--planning-account-id <id>', 'Planning provider account/profile ID from omnai estate')
+>>>>>>> Stashed changes
   .option('--spec <file>', 'Spec/PRD file (repeatable: --spec A --spec B)', (v: string, prev: string[]) => [...prev, v], [] as string[])
   .option('--no-review', 'Auto-approve the generated plan without interactive review')
   .option('--yes', 'Skip "Run now?" confirmation and proceed automatically')
@@ -221,12 +229,20 @@ export const initCommand = new Command('plan')
   .option('--brainstorm', 'Show 2-3 candidate approaches before planning (interactive only, skipped for simple goals)')
   .action(async (goalArg: string | undefined, opts: {
     model?: string;
+<<<<<<< Updated upstream
     planModel?: string;
     planEngine?: string;
     planProvider?: string;
     planAccount?: string;
     planModelId?: string;
     planEffort?: string;
+=======
+    planningModel?: string;
+    planningEngine?: string;
+    planningProvider?: string;
+    planningModelId?: string;
+    planningAccountId?: string;
+>>>>>>> Stashed changes
     spec: string[];
     review: boolean;
     verbose?: boolean;
@@ -251,11 +267,18 @@ export const initCommand = new Command('plan')
     p.intro(`${c(cyan + bold, '☁️  cloudy plan')}  ${c(bold, projectName)}  ${c(dim, cwd)}`);
 
     const config = await loadConfig(cwd);
+<<<<<<< Updated upstream
     if (opts.planEngine) config.planningRuntime = { ...config.planningRuntime, engine: opts.planEngine as typeof config.engine };
     if (opts.planProvider) config.planningRuntime = { ...config.planningRuntime, provider: opts.planProvider };
     if (opts.planAccount) config.planningRuntime = { ...config.planningRuntime, account: opts.planAccount };
     if (opts.planModelId) config.planningRuntime = { ...config.planningRuntime, modelId: opts.planModelId };
     if (opts.planEffort) config.planningRuntime = { ...config.planningRuntime, effort: opts.planEffort as any };
+=======
+    if (opts.planningEngine) config.planningRuntime = { ...config.planningRuntime, engine: opts.planningEngine as typeof config.engine };
+    if (opts.planningProvider) config.planningRuntime = { ...config.planningRuntime, provider: opts.planningProvider };
+    if (opts.planningModelId) config.planningRuntime = { ...config.planningRuntime, modelId: opts.planningModelId };
+    if (opts.planningAccountId) config.planningRuntime = { ...config.planningRuntime, accountId: opts.planningAccountId };
+>>>>>>> Stashed changes
 
     // ── Spec file(s) ──────────────────────────────────────────────────────────
     let specContent: string | undefined;

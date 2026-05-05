@@ -177,6 +177,7 @@ export const runCommand = new Command('run')
   .option('--build-model-id <id>', 'Provider-native build model ID (e.g. o3, codex-mini)')
   .option('--task-review-model <model>', 'Model for per-task validation')
   .option('--model-auto', 'Auto-route model per task complexity')
+<<<<<<< Updated upstream
   .option('--plan-engine <engine>', 'Plan engine (e.g. claude-code, codex, pi-mono)')
   .option('--plan-provider <provider>', 'Plan provider/auth route (e.g. claude subscription, codex subscription, openai API)')
   .option('--plan-account <account>', 'Plan account route within the provider/runtime')
@@ -195,6 +196,23 @@ export const runCommand = new Command('run')
   .option('--run-review-account <account>', 'Holistic run-review account route within the provider/runtime')
   .option('--run-review-model-id <id>', 'Provider-native run-review model ID')
   .option('--run-review-effort <level>', 'Holistic run-review effort: low|medium|high|max')
+=======
+  .option('--planning-engine <engine>', 'Planning engine (e.g. claude-code, codex, pi-mono)')
+  .option('--planning-provider <provider>', 'Planning provider/auth route (e.g. claude subscription, codex subscription, openai API)')
+  .option('--planning-model-id <id>', 'Provider-native planning model ID')
+  .option('--planning-account-id <id>', 'Planning provider account/profile ID from omnai estate')
+  .option('--engine <engine>', 'Execution engine (e.g. claude-code, codex, pi-mono)')
+  .option('--provider <provider>', 'Execution provider/auth route (e.g. claude subscription, codex subscription, openai API)')
+  .option('--execution-account-id <id>', 'Execution provider account/profile ID from omnai estate')
+  .option('--validation-engine <engine>', 'Per-task AI validation engine')
+  .option('--validation-provider <provider>', 'Per-task AI validation provider/auth route')
+  .option('--validation-model-id <id>', 'Provider-native per-task AI validation model ID')
+  .option('--validation-account-id <id>', 'Validation provider account/profile ID from omnai estate')
+  .option('--review-engine <engine>', 'Holistic review / review-side prompt engine')
+  .option('--review-provider <provider>', 'Holistic review / review-side provider/auth route')
+  .option('--review-model-id <id>', 'Provider-native holistic review model ID')
+  .option('--review-account-id <id>', 'Review provider account/profile ID from omnai estate')
+>>>>>>> Stashed changes
   .option('--parallel', 'Enable parallel execution')
   .option('--max-parallel <n>', 'Max parallel tasks', parseInt)
   .option('--no-validate', 'Skip validation')
@@ -226,6 +244,7 @@ export const runCommand = new Command('run')
       buildModelId?: string;
       taskReviewModel?: string;
       qualityReviewModel?: string;
+<<<<<<< Updated upstream
       planEngine?: string;
       planProvider?: string;
       planAccount?: string;
@@ -244,6 +263,23 @@ export const runCommand = new Command('run')
       runReviewAccount?: string;
       runReviewModelId?: string;
       runReviewEffort?: string;
+=======
+      planningEngine?: string;
+      planningProvider?: string;
+      planningModelId?: string;
+      planningAccountId?: string;
+      engine?: string;
+      provider?: string;
+      executionAccountId?: string;
+      validationEngine?: string;
+      validationProvider?: string;
+      validationModelId?: string;
+      validationAccountId?: string;
+      reviewEngine?: string;
+      reviewProvider?: string;
+      reviewModelId?: string;
+      reviewAccountId?: string;
+>>>>>>> Stashed changes
       modelAuto?: boolean;
       parallel?: boolean;
       maxParallel?: number;
@@ -313,6 +349,7 @@ export const runCommand = new Command('run')
           ? parseModelFlag(opts.planModel)
           : undefined,
       });
+<<<<<<< Updated upstream
       if (opts.planEngine) config.planningRuntime = { ...config.planningRuntime, engine: opts.planEngine as typeof config.engine };
       if (opts.planProvider) config.planningRuntime = { ...config.planningRuntime, provider: opts.planProvider };
       if (opts.planAccount) config.planningRuntime = { ...config.planningRuntime, account: opts.planAccount };
@@ -347,6 +384,21 @@ export const runCommand = new Command('run')
           console.log(c(yellow, '  [stale-state check] task-level execution runtime override detected — make sure this worktree contains the latest keel/tasks/*.json before running.'));
         }
       }
+=======
+      if (opts.planningEngine) config.planningRuntime = { ...config.planningRuntime, engine: opts.planningEngine as typeof config.engine };
+      if (opts.planningProvider) config.planningRuntime = { ...config.planningRuntime, provider: opts.planningProvider };
+      if (opts.planningModelId) config.planningRuntime = { ...config.planningRuntime, modelId: opts.planningModelId };
+      if (opts.planningAccountId) config.planningRuntime = { ...config.planningRuntime, accountId: opts.planningAccountId };
+      if (opts.validationEngine) config.validationRuntime = { ...config.validationRuntime, engine: opts.validationEngine as typeof config.engine };
+      if (opts.validationProvider) config.validationRuntime = { ...config.validationRuntime, provider: opts.validationProvider };
+      if (opts.validationModelId) config.validationRuntime = { ...config.validationRuntime, modelId: opts.validationModelId };
+      if (opts.validationAccountId) config.validationRuntime = { ...config.validationRuntime, accountId: opts.validationAccountId };
+      if (opts.reviewEngine) config.reviewRuntime = { ...config.reviewRuntime, engine: opts.reviewEngine as typeof config.engine };
+      if (opts.reviewProvider) config.reviewRuntime = { ...config.reviewRuntime, provider: opts.reviewProvider };
+      if (opts.reviewModelId) config.reviewRuntime = { ...config.reviewRuntime, modelId: opts.reviewModelId };
+      if (opts.reviewAccountId) config.reviewRuntime = { ...config.reviewRuntime, accountId: opts.reviewAccountId };
+      if (opts.executionAccountId) config.executionAccountId = opts.executionAccountId;
+>>>>>>> Stashed changes
 
       // ── Interactive model selection (when not provided via flags) ────────────
       const MODEL_OPTIONS = [

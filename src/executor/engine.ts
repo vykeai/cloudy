@@ -7,7 +7,11 @@ export interface EngineRunOptions {
   prompt: string;
   engine?: Engine;
   provider?: Provider;
+<<<<<<< Updated upstream
   account?: string;
+=======
+  accountId?: string;
+>>>>>>> Stashed changes
   claudeModel?: ClaudeModel;
   modelId?: string;
   cwd: string;
@@ -30,7 +34,11 @@ export async function runEngine(options: EngineRunOptions): Promise<ClaudeRunRes
     prompt,
     engine,
     provider,
+<<<<<<< Updated upstream
     account,
+=======
+    accountId,
+>>>>>>> Stashed changes
     claudeModel,
     modelId,
     cwd,
@@ -57,7 +65,11 @@ export async function runEngine(options: EngineRunOptions): Promise<ClaudeRunRes
     prompt,
     engine: engine ?? 'claude-code',
     provider,
+<<<<<<< Updated upstream
     account,
+=======
+    accountId,
+>>>>>>> Stashed changes
     modelId: resolvedModelId,
     cwd,
     onOutput,
