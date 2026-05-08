@@ -118,7 +118,7 @@ if [ -s "$violations" ]; then
   cat "$violations" >&2
   echo "---" >&2
   echo "Fix: engine selection must route through sweech profiles + omnai.select()." >&2
-  echo "See vykean-hq/PROVIDER_LOCK_SWEEP.md for context and fix tasks." >&2
+  echo "See https://github.com/vykeai/onlytools-docs/blob/main/PROVIDER_LOCK.md for context and fix tasks." >&2
   exit 1
 fi
 
