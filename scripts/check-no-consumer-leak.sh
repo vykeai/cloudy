@@ -26,7 +26,7 @@ repo_root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$repo_root"
 
 # Scan source code only (file-type whitelist). Excludes tests + build artefacts.
-hits="$(grep -REn 'vykean|VYKEAN' \
+hits="$(grep -REn -i 'vykean' \
   --include='*.py' \
   --include='*.ts' \
   --include='*.tsx' \
@@ -45,6 +45,7 @@ hits="$(grep -REn 'vykean|VYKEAN' \
   --exclude-dir=fixtures \
   --exclude-dir=node_modules \
   --exclude-dir=venv \
+  --exclude-dir=.venv \
   --exclude-dir=__pycache__ \
   --exclude-dir=dist \
   --exclude-dir=build \
