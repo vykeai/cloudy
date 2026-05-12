@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install vykean-hq git hooks. Idempotent. Run after clone.
+# Install repo git hooks. Idempotent. Run after clone.
 set -euo pipefail
 REPO=$(git rev-parse --show-toplevel)
 HOOKS="$REPO/.git/hooks"
@@ -7,7 +7,7 @@ mkdir -p "$HOOKS"
 
 cat > "$HOOKS/pre-commit" <<'HOOK'
 #!/usr/bin/env bash
-# vykean-hq pre-commit hook — managed by scripts/install-hooks.sh
+# pre-commit hook — managed by scripts/install-hooks.sh
 set -euo pipefail
 REPO_ROOT=$(git rev-parse --show-toplevel)
 if [ -x "$REPO_ROOT/scripts/check-provider-lock.sh" ]; then
