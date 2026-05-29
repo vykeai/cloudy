@@ -7,3 +7,6 @@ dist/
 
 # yalc local package store
 .yalc/
+
+# git worktrees (parallel agent runs)
+.worktrees/
