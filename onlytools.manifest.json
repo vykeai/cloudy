@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "onlytools.manifest.v1",
+  "slug": "cloudy",
+  "name": "Cloudy",
+  "catalog": {
+    "tier": "T1",
+    "classification": "incubating-product",
+    "status": "active",
+    "repoPath": "cloudy",
+    "owner": "luke",
+    "releaseOwner": "luke"
+  },
+  "version": {
+    "source": "package",
+    "path": "package.json"
+  },
+  "serviceMode": "cli-only",
+  "environments": [
+    {
+      "slug": "prod",
+      "displayName": "Production",
+      "configRoot": "~/.cloudy",
+      "dataRoot": "~/.cloudy",
+      "cacheRoot": "~/.cloudy/cache",
+      "serviceSlug": "cloudy",
+      "fedIdentity": "cloudy",
+      "inheritsFrom": null
+    },
+    {
+      "slug": "dev",
+      "displayName": "Development",
+      "configRoot": "~/.cloudy-dev",
+      "dataRoot": "~/.cloudy-dev",
+      "cacheRoot": "~/.cloudy-dev/cache",
+      "serviceSlug": "cloudy-dev",
+      "fedIdentity": "cloudy-dev",
+      "inheritsFrom": null
+    }
+  ],
+  "commands": {
+    "install": {
+      "argv": [
+        "npm",
+        "install"
+      ],
+      "cwd": ".",
+      "timeoutSeconds": 300
+    },
+    "build": {
+      "argv": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": ".",
+      "outputs": [
+        "dist/"
+      ],
+      "timeoutSeconds": 600
+    },
+    "test": {
+      "argv": [
+        "npm",
+        "test"
+      ],
+      "cwd": ".",
+      "timeoutSeconds": 900
+    }
+  },
+  "services": [],
+  "dependencies": [],
+  "proof": {
+    "receipts": [
+      {
+        "kind": "onlytools.test",
+        "requiredFor": [
+          "test"
+        ],
+        "provider": "proofy"
+      }
+    ],
+    "sentinel": {
+      "required": true,
+      "checks": [
+        "manifest",
+        "graph"
+      ]
+    }
+  }
+}
