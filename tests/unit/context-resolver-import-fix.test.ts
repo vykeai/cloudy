@@ -1,9 +1,22 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
 
 // Test the resolveImportPath logic indirectly via expandContext behaviour.
 // The bug was: a for-loop always returned on the first iteration, so non-relative
 // imports were always resolved with '.ts' extension rather than a wildcard.
 // The fix: use `${relCandidate}.*` (wildcard) instead.
+
+// Use an isolated empty temp dir as cwd instead of the shared /tmp, which
+// resolveContextFiles walks recursively (slow/non-deterministic on dev machines).
+let emptyDir: string;
+beforeAll(async () => {
+  emptyDir = await fs.mkdtemp(path.join(os.tmpdir(), 'cloudy-ctx-empty-'));
+});
+afterAll(async () => {
+  await fs.rm(emptyDir, { recursive: true, force: true });
+});
 
 describe('context-resolver — import resolution bug fix', () => {
   // We test the fix by verifying that expandContext returns wildcard patterns
@@ -13,13 +26,13 @@ describe('context-resolver — import resolution bug fix', () => {
 
   it('resolveContextFiles returns empty array for no patterns', async () => {
     const { resolveContextFiles } = await import('../../src/executor/context-resolver.js');
-    const result = await resolveContextFiles([], '/tmp');
+    const result = await resolveContextFiles([], emptyDir);
     expect(result).toEqual([]);
   });
 
   it('resolveContextFiles handles non-existent patterns gracefully', async () => {
     const { resolveContextFiles } = await import('../../src/executor/context-resolver.js');
-    const result = await resolveContextFiles(['nonexistent/**/*.ts'], '/tmp');
+    const result = await resolveContextFiles(['nonexistent/**/*.ts'], emptyDir);
     expect(result).toEqual([]);
   });
 

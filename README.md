@@ -2,7 +2,7 @@
 
 **Give an agent a goal. Watch it build.**
 
-> `v0.1.0` · MIT · Node.js 18+ · Runs local agent CLIs and API-backed engines via `omnai`
+> `v0.2.0` · MIT · Node.js 18+ · Runs local agent CLIs and API-backed engines via `omnai`
 
 Cloudy breaks a project goal into a dependency-ordered task graph, then works through each task using local agent CLIs or API-backed runtimes via `omnai` — with validation, automatic retry, and real-time feedback. Works with any language or stack.
 

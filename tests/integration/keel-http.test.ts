@@ -107,7 +107,9 @@ describe('keel integration over HTTP', () => {
       projectDir,
     )
 
-    expect(recorder.requests).toHaveLength(3)
+    // writeRunOutcome makes two write-backs: a task PATCH and a note POST.
+    // (The separate "decision draft" POST was removed in ab4e291.)
+    expect(recorder.requests).toHaveLength(2)
 
     expect(recorder.requests[0]).toMatchObject({
       method: 'PATCH',
@@ -129,17 +131,6 @@ describe('keel integration over HTTP', () => {
     expect(JSON.parse(recorder.requests[1].body)).toMatchObject({
       by: 'cloudy',
       text: expect.stringContaining('Cloudy run run-20260314-demo-project failed.'),
-    })
-
-    expect(recorder.requests[2]).toMatchObject({
-      method: 'POST',
-      url: '/api/projects/demo-project/decisions',
-    })
-    expect(JSON.parse(recorder.requests[2].body)).toMatchObject({
-      title: 'Cloudy run blocked T-123',
-      status: 'proposed',
-      affects: ['T-123'],
-      outcome: expect.stringContaining('Investigate the failed cloudy run'),
     })
 
     expect(logInfo).toHaveBeenCalledWith(expect.stringContaining('Updated demo-project/T-123'))

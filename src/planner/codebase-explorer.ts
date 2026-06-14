@@ -47,7 +47,11 @@ export async function exploreCodebase(cwd: string): Promise<string> {
 
   // ── Test files ───────────────────────────────────────────────────────────
   try {
-    const { stdout } = await execa('find', ['.', '-type', 'f', '-name', '*.test.*', '-o', '-name', '*.spec.*', '-not', '-path', './node_modules/*'], {
+    // -prune node_modules (skips descending into it, not just filtering matches)
+    // and group the -name alternation in ( ) so it binds to -type f as a whole.
+    // A bare `-o` in the old command let the first branch traverse the entire
+    // tree (including node_modules), which was slow on large/shared dirs.
+    const { stdout } = await execa('find', ['.', '-maxdepth', '6', '-type', 'd', '-name', 'node_modules', '-prune', '-o', '-type', 'f', '(', '-name', '*.test.*', '-o', '-name', '*.spec.*', ')', '-print'], {
       cwd,
       reject: false,
     });

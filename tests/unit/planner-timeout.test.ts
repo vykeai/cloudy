@@ -25,6 +25,13 @@ vi.mock('../../src/utils/claude-path.js', () => ({
   findClaudeBinary: vi.fn().mockResolvedValue('/usr/bin/claude'),
 }));
 
+// Stub the deterministic codebase snapshot — it shells out to `find` over the
+// real cwd, which is slow/non-deterministic on shared dirs like /tmp and is
+// irrelevant to the timeout-mapping behaviour under test here.
+vi.mock('../../src/planner/codebase-explorer.js', () => ({
+  exploreCodebase: vi.fn().mockResolvedValue(''),
+}));
+
 function makePlanResponse(tasks: Array<{ id: string; timeoutMinutes?: number }>): string {
   return JSON.stringify({
     tasks: tasks.map((t) => ({

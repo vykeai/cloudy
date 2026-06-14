@@ -63,6 +63,12 @@ vi.mock('../../src/git/git.js', () => ({
 }));
 vi.mock('../../src/core/state.js', () => ({ saveState: vi.fn(async () => {}) }));
 vi.mock('../../src/config/auto-routing.js', () => ({ routeModelForTask: vi.fn(() => 'sonnet') }));
+// Stub the deterministic codebase snapshot — it shells out to `find` over the
+// real cwd (/tmp here), which is slow/non-deterministic and irrelevant to the
+// plan-quality / spec-coverage warnings under test.
+vi.mock('../../src/planner/codebase-explorer.js', () => ({
+  exploreCodebase: vi.fn(async () => ''),
+}));
 vi.mock('../../src/utils/logger.js', () => ({
   log: { info: vi.fn(async () => {}), warn: vi.fn(async () => {}), error: vi.fn(async () => {}) },
   logTaskOutput: vi.fn(async () => {}),
